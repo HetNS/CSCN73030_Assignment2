@@ -2,9 +2,44 @@
 // Author: Het Nayak
 
 #include <iostream>
+#include <fstream>
+#include <sstream>
+#include <string>
+#include <vector>
+
+// Struct holding standard student details
+struct STUDENT_DATA {
+    std::string firstName;
+    std::string lastName;
+};
 
 int main() {
-    // Verification output
-    std::cout << "Project Initialized Successfully." << std::endl;
+    std::vector<STUDENT_DATA> students;
+    std::ifstream file("StudentData.txt");
+
+    // Verify file opened successfully
+    if (!file.is_open()) {
+        std::cerr << "Error: Unable to open StudentData.txt" << std::endl;
+        return 1;
+    }
+
+    std::string line;
+    while (std::getline(file, line)) {
+        if (line.empty()) continue; // Skips blank lines
+
+        std::stringstream ss(line);
+        std::string firstName, lastName;
+
+        // Parse comma-separated first and last name
+        if (std::getline(ss, firstName, ',') && std::getline(ss, lastName)) {
+            STUDENT_DATA student;
+            student.firstName = firstName;
+            student.lastName = lastName;
+            students.push_back(student);
+        }
+    }
+
+    file.close();
+
     return 1;
 }

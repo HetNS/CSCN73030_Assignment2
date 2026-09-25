@@ -41,5 +41,14 @@ int main() {
 
     file.close();
 
+    // Print student details only when compiled in DEBUG mode
+    #ifdef _DEBUG
+         std::cout << "--- DEBUG MODE: PRINTING STUDENT DATA ---" << std::endl;
+         for (size_t i = 0; i < students.size(); i++) {
+           std::cout << "First Name: " << students[i].firstName
+                     << ", Last Name: " << students[i].lastName << std::endl;
+         }
+    #endif
+
     return 1;
 }
